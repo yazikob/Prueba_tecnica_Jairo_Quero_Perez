@@ -1,0 +1,57 @@
+﻿/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    margin-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.first-load-time {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
+}
+.table {
+    width: 90%; /* Puedes ajustar este valor según tus necesidades */
+    margin: auto; /* Centra la tabla horizontalmente */
+}
+
+.table-header {
+    background-color: green; /* Fondo verde */
+    color: white; /* Letras blancas */
+}
+.table-footer {
+    background-color: gray; 
+}
+table th.custom-table-header {
+    background-color: #009688;
+    color: white;
+}
+table td.table-footer {
+    background-color: #009688;
+    color: white;
+}
+
+table td.background-blue {
+    background-color: lightskyblue;
+    color: white;
+}
+
+table td.background-pink {
+    background-color: pink;
+    color: white;
+}
+
+/* Set widths on the form inputs since otherwise they're 100% wide */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    .body-content {
+        padding: 0;
+    }
+}
