@@ -136,10 +136,10 @@ namespace PruebaTecnicaJQP
             TableHeaderCell cell2 = new TableHeaderCell { Text = "Segundo Apellido", CssClass = "custom-table-header" };
             TableHeaderCell cell3 = new TableHeaderCell { Text = "Nombre", CssClass = "custom-table-header" };
             TableHeaderCell cell4 = new TableHeaderCell { Text = "Sexo", CssClass = "custom-table-header" };
+            TableHeaderCell cell5 = new TableHeaderCell { Text = "Editar", CssClass = "custom-table-header" };
 
-          
 
-            headerRow.Cells.AddRange(new TableCell[] { cell1, cell2, cell3, cell4 });
+            headerRow.Cells.AddRange(new TableCell[] { cell1, cell2, cell3, cell4, cell5 });
             tblClientes.Rows.Add(headerRow);
 
             // Llenar la tabla con datos
@@ -173,6 +173,17 @@ namespace PruebaTecnicaJQP
                 sexoCell.Controls.Add(ddlSexo);
                 row.Cells.Add(sexoCell);
 
+                // Acción con Botón
+                TableCell actionCell = new TableCell();
+                Button actionButton = new Button();
+                actionButton.ID = "btnAction_" + cliente.idCliente;  // ID único para cada botón
+                actionButton.Text = "Editar";  
+                actionButton.Click += ActionButton_Click;  // Evento cuando se clickea el botón
+                actionButton.Attributes.Add("data-client-id", cliente.idCliente.ToString());
+                actionCell.Controls.Add(actionButton);
+                row.Cells.Add(actionCell);
+
+
                 tblClientes.Rows.Add(row);
 
             }
@@ -205,7 +216,48 @@ namespace PruebaTecnicaJQP
         }
 
 
+        protected void ActionButton_Click(object sender, EventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            if (clickedButton == null)
+                return;
 
+            string clientIdString = clickedButton.Attributes["data-client-id"];
+            if (int.TryParse(clientIdString, out int clientId))
+            {
+                foreach (TableRow row in tblClientes.Rows)
+                {
+                    TableCell actionCell = row.Cells[row.Cells.Count - 1];
+                    Button rowButton = actionCell.Controls.OfType<Button>().FirstOrDefault();
+
+                    if (rowButton != null && int.TryParse(rowButton.Attributes["data-client-id"], out int rowClientId))
+                    {
+                        if (rowClientId == clientId)
+                        {
+                            
+
+                            // Primer Apellido
+                            TableCell primerApellidoCell = row.Cells[0];
+                            string primerApellido = primerApellidoCell.Text;
+                            primerApellidoCell.Controls.Clear();
+                            TextBox txtPrimerApellido = new TextBox { Text = primerApellido };
+                            primerApellidoCell.Controls.Add(txtPrimerApellido);
+
+                            // Segundo Apellido
+                            TableCell segundoApellidoCell = row.Cells[1];
+                            string segundoApellido = segundoApellidoCell.Text;
+                            segundoApellidoCell.Controls.Clear();
+                            TextBox txtSegundoApellido = new TextBox { Text = segundoApellido };
+                            segundoApellidoCell.Controls.Add(txtSegundoApellido);
+
+                            
+
+                            break; // Romper el ciclo una vez que encontramos la fila correcta
+                        }
+                    }
+                }
+            }
+        }
 
 
     }
